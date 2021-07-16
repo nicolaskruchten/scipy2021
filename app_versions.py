@@ -49,7 +49,7 @@ app.layout = html.Div(children = [
 def cb(year):
     df_year = df.query("year == @year")
     return px.scatter(df_year, x="gdpPercap", y="lifeExp", size="pop",
-          log_x=True, size_max=60, height=400)
+          log_x=True, size_max=60, hover_name="country", height=400)
 
 app.run_server(mode="jupyterlab")
 
@@ -81,7 +81,7 @@ app.layout = html.Div(children = [
 def cb(year):
     df_year = df.query("year == @year")
     return px.scatter(df_year, x="gdpPercap", y="lifeExp", size="pop",
-          log_x=True, size_max=60, height=400,
+          log_x=True, size_max=60, hover_name="country", height=400,
           custom_data=[df_year.index]).update_layout(dragmode='lasso')
 
 @app.callback(Output('map', 'figure'),
@@ -95,6 +95,7 @@ def display_selected_data(year, selectedData):
         except:
             pass
 
-    return px.scatter_geo(df_year, locations="iso_alpha",
-                          size="pop", height=400)
+    return px.scatter_geo(df_year, locations="iso_alpha",size="pop", 
+                          hover_name="country", height=400)
+
 app.run_server(mode="jupyterlab")
